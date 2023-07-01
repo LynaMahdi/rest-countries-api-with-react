@@ -1,0 +1,9 @@
+.select{
+    position: absolute;
+    left: 1150px;
+    top: 100px;
+    width: 200px;
+    height: 35px;
+    background-color:  hsl(209, 23%, 22%);
+    border-radius: 6px;
+}

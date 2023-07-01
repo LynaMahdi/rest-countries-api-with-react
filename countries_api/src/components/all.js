@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from "react";
 import './all.css'
 import Filter from "./filter-region";
-
-function All(){
+import { Link } from "react-router-dom";
+function All({setChosedCountry}){
 
 
     const [countries,setCountries]=useState([])
@@ -21,8 +21,6 @@ function All(){
   
   useEffect(() => {
    fetchCountries()
-    
-    
   }, [])
 
 
@@ -31,8 +29,8 @@ function All(){
     <div id="all">  
 
 
-    <div className="Search-bar">
-        <input id="input" type='search' placeholder='Search for a country...' onChange={(e)=>{setSearched(e.target.value)}}  />
+    <div id="Search-bar" className="Search-bar">
+        <input id="input" className="input" type='search' placeholder='Search for a country...' onChange={(e)=>{setSearched(e.target.value)}}  />
     </div>
 
 
@@ -44,8 +42,8 @@ function All(){
      {countries.filter(country => country.name.common.toLowerCase().includes(searched)).map((country)=>{
          const {id,name,capital,flags,population,region}=country
          return( 
-        <div >
-           <article  id="grid" key={id} className="grid-item">
+        <Link to={`/country/${country.name.common}`} >
+           <article id="grid" key={id} className="grid-item" onClick={console.log(country.name.common)}>
              <div className="drapeau">
                  <img className="drapeauIm" src={flags.png} alt={flags.alt} />
              </div>
@@ -57,18 +55,19 @@ function All(){
                  
              </div>
           </article>
-         </div>
+         </Link>
          )
      })}
     </div>
+
      :
      
      <div id="bloc" className="bloc">
         {countries.map((country)=>{
             const {id,name,capital,flags,population,region}=country
             return( 
-           <div >
-              <article id="grid" key={id} className="grid-item">
+           <Link  to={`/country/${country.name.common}`}>
+              <article id="grid" key={id} className="grid-item"  >
                 <div className="drapeau">
                     <img className="drapeauIm" src={flags.png} alt={flags.alt} />
                 </div>
@@ -80,7 +79,7 @@ function All(){
                     
                 </div>
              </article>
-            </div>
+            </Link>
             )
         })}
     </div>}

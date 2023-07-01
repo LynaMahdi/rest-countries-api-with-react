@@ -6,9 +6,10 @@ import React ,{ useState ,useEffect} from 'react'
 function Filter({setCountries}){
     
     const url='https://restcountries.com/v3.1/region/'
-    const [Region,setRegion]=useState("all")
+    const [Region,setRegion]=useState("america")
 
     const Regions = [
+
         {reg:'Africa'},
         {reg:'America'},
         {reg:'Asia'},
@@ -16,26 +17,42 @@ function Filter({setCountries}){
         {reg:'Oceania'}]
 
     
-        const fetchRegions = async (Regin) => {
-            const response = await fetch(`https://restcountries.com/v3.1/region/${Regin}`)
+        const fetchRegions = async (reg) => {
+            if(reg==undefined){
+                let url='https://restcountries.com/v3.1/all'
+                const  response = await fetch(url)
+                const region = await response.json()
+                setCountries(region)
+              
+            }else{
+
+            let url=`https://restcountries.com/v3.1/region/${reg}`
+            const  response = await fetch(url)
             const region = await response.json()
             setCountries(region)
-            setRegion(region)
-            console.log(response)
+}
+           
+        
           }
 
           
-useEffect(() => {
-    
-   fetchRegions()
-  
-  
-}, [])
+        useEffect(() => {  
+           fetchRegions()}, [])
 
     return(
         
     <div className="Filter-by-region">
-    <select  name="select" value={Regions.reg} onChange={fetchRegions("america")}>
+    <select
+            name="select"
+            className='select'
+            id="select"
+            onChange={(e) => fetchRegions(e.target.value)}
+            
+            value={Regions.reg}
+          >
+            
+        
+        <option value="default" disabled hidden>Filter by region</option>
         <option value="Africa">Africa</option>
          <option value="Asia">Asia</option>
          <option value="Europe">Europe</option>

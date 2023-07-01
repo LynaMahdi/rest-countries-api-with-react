@@ -5,11 +5,11 @@
 }
 
 
-@media screen and (min-width: 900px) {
-    body {
+
+body {
       background-color: hsl(207, 26%, 17%);
     }
-}
+
 
 .Container{
     display: flex;
